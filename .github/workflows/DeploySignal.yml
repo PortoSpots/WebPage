@@ -3,7 +3,8 @@
 name: Deploy Signal Workflow
 
 # Controls when the workflow will run
-on: [repository_dispatch]
+on: 
+  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -11,10 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Event Information
-        run: |
-          echo "Event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'"
-      - name: PONG - Dispatch response to received PING
-        if: github.event.action == 'DeployPing'
         run: |
           curl -X POST https://api.github.com/PortoSpots/WebDev/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
